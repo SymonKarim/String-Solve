@@ -1,0 +1,47 @@
+//*Bismillahir Rahmanir Raheem
+//! symonkarim
+#include <bits/stdc++.h>
+#define ll long long
+#define FASTER ios::sync_with_stdio(false), cin.tie(0), cout.tie(0);
+using namespace std;
+
+bool solve(string str, string st) {
+    if (str.size() != st.size()) return false;
+
+    unordered_map<char, char>mp;
+    unordered_set<char>set;
+
+    for (int i = 0; i < str.length(); i++) {
+        char x = str[i], y = st[i];
+
+        if (mp.find(x) != mp.end()) {
+            if (mp[x] != y) {
+                return false;
+            }
+        } else {
+            if (set.find(y) != set.end()) {
+                return false;
+            }
+            mp[x] = y;
+            set.insert(y);
+
+        }
+    }
+    return true;
+}
+
+int main()
+{
+    FASTER
+#ifndef ONLINE_JUDGE
+    freopen("input.txt", "r", stdin);
+    freopen("output.txt", "w", stdout);
+#endif
+
+    int t; cin >> t; for (int i = 1; i <= t; i++) {
+        string str, st; cin >> str >> st;
+        cout << str << " and " << st << " are: ";
+        solve(str, st) ? puts("Isomorphic") : puts("!Isomorphic");
+    }
+}
+
