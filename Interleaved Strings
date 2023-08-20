@@ -1,0 +1,52 @@
+//{ Driver Code Starts
+//Initial template for C++
+
+#include <bits/stdc++.h>
+using namespace std;
+
+// } Driver Code Ends
+//User function template for C++
+
+class Solution{
+  public:
+    /*You are required to complete this method */
+    bool solve( vector<vector<int>>&dp,int indA,int indB, int indC, int size,string A, string B, string &C, string temp){
+       if(indA==A.size() and indB==B.size() and indC==C.size()){
+            return 1;
+        }
+        if(indC==C.size() and (indB<B.size() || indA<C.size()) ){
+            return 0;
+        }
+    int &ret = dp[indA][indB];
+    if(ret!=-1) return ret;
+    int x = 0, y = 0;
+    if(A[indA] == C[indC]) x=solve(dp,indA+1, indB,indC+1, size, A, B,C, temp+A[indA]);
+    if(B[indB] == C[indC]) y = solve(dp,indA, indB+1,indC+1, size, A, B,C, temp+B[indB]);
+    return dp[indA][indB] = max(x,y);
+    }
+    bool isInterleave(string A, string B, string C) 
+    {   
+        vector<vector<int>>dp(A.size()+1, vector<int>(B.size()+1,-1));
+        if((A+B==C) or (B+A==C)) return true;
+        return solve(dp,0,0,0,C.size(), A,B,C,"");
+    }
+
+};
+
+//{ Driver Code Starts.
+int main() {
+	int t;
+	cin>>t;
+	while(t--)
+	{
+		string a,b,c;
+		cin>>a;
+		cin>>b;
+		cin>>c;
+		Solution obj;
+		cout<<obj.isInterleave(a,b,c)<<endl;
+	}
+	// your code goes here
+	return 0;
+}
+// } Driver Code Ends
